@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GM200 Construcciones - Ingeniería y Arquitectura</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Custom palette based on the logo colors */
+  :root {
+    --color-dark-gray: #3a3a3a;
+    --color-gray-text: #555555;
+    --color-yellow-gm200: #f4b800;
+    --color-light-gray-bg: #f9f9f9;
+    --color-accent-blue: #007bff; /* Added for a modern touch, can be adjusted */
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-light-gray-bg);
+    color: var(--color-dark-gray);
+    line-height: 1.6;
+  }
+
+  /* Logo container */
+  .logo-container {
+    max-width: 220px;
+  }
+
+  /* Header styles */
+  header {
+    background-color: white;
+    border-bottom: 1px solid #eee; /* Lighter border for modern look */
+  }
+
+  nav a {
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transform for subtle animation */
+    position: relative;
+    padding-bottom: 5px;
+  }
+  nav a:hover, nav a:focus {
+    color: var(--color-yellow-gm200);
+    transform: translateY(-2px); /* Subtle lift on hover */
+    outline: none;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-yellow-gm200);
+    transition: width 0.3s ease;
+  }
+  nav a:hover::after, nav a:focus::after {
+    width: 100%;
+  }
+
+  /* Hero section */
+  .hero-section {
+    background: linear-gradient(90deg, var(--color-yellow-gm200) 10%, transparent 90%), url('https://via.placeholder.com/1920x800/3a3a3a/f4b800?text=GM200+Construcciones') no-repeat center center; /* Added a placeholder background image */
+    background-size: cover;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(244, 184, 0, 0.8) 10%, rgba(244, 184, 0, 0.2) 90%); /* Overlay for text readability */
+    z-index: 1;
+  }
+  .hero-section .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Section titles */
+  h2 {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-yellow-gm200);
+    border-radius: 2px;
+  }
+  @media (min-width: 768px) {
+    h2.text-center::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    h2:not(.text-center)::after {
+      left: 0;
+      transform: translateX(0);
+    }
+  }
+
+  /* Services grid */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem; /* Increased gap for better spacing */
+  }
+  .services-grid > div {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .services-grid > div:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 20px rgba(0, 0, 0, 0.12);
+  }
+  .services-grid .text-6xl {
+    line-height: 1; /* Adjust line height for emojis */
+  }
+
+  /* Projects grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem; /* Increased gap */
+  }
+
+  /* Project card */
+  .project-card {
+    background: white;
+    border-radius: 0.75rem; /* Slightly more rounded */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Stronger, more defined shadow */
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Slower transition */
+    cursor: pointer;
+  }
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-12px) scale(1.02); /* More pronounced lift and slight scale */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.18); /* More intense shadow on hover */
+    outline: none;
+  }
+  .project-card img {
+    width: 100%;
+    height: 200px; /* Slightly taller images */
+    object-fit: cover;
+    transition: transform 0.4s ease; /* Image zoom on hover */
+  }
+  .project-card:hover img {
+    transform: scale(1.05);
+  }
+  .project-content {
+    padding: 1.5rem; /* More padding */
+  }
+  .project-title {
+    font-weight: 700;
+    font-size: 1.25rem; /* Slightly larger title */
+    color: var(--color-dark-gray);
+    margin-bottom: 0.5rem;
+  }
+  .project-description {
+    color: var(--color-gray-text);
+    font-size: 1rem; /* Slightly larger description text */
+    line-height: 1.5;
+  }
+
+  /* Contact form */
+  .contact-form input,
+  .contact-form textarea {
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    border-color: var(--color-yellow-gm200);
+    box-shadow: 0 0 0 3px rgba(244, 184, 0, 0.2);
+  }
+  .contact-form button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .contact-form button:hover {
+    transform: translateY(-2px);
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--color-dark-gray);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2.5rem 1.5rem; /* More padding */
+  }
+  footer a {
+    color: var(--color-yellow-gm200);
+    text-decoration: none; /* No underline by default */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+  footer a:hover,
+  footer a:focus {
+    text-decoration: underline; /* Underline on hover */
+    outline: none;
+  }
+
+  /* New "What We Do" Section Styles */
+  .what-we-do-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+  .what-we-do-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+  }
+  .what-we-do-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  }
+  .what-we-do-card .icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: var(--color-yellow-gm200);
+  }
+  .what-we-do-card h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-dark-gray);
+    margin-bottom: 0.75rem;
+  }
+  .what-we-do-card p {
+    color: var(--color-gray-text);
+    font-size: 1rem;
+  }
+
+  /* New styles for About Us section background image */
+  .about-bg {
+    background: url('https://www.usfq.edu.ec/sites/default/files/styles/full/public/2020-05/master_ingenieria_civil_03.jpg') no-repeat center center; /* Reemplaza con tu imagen */
+    background-size: cover;
+    position: relative;
+    color: white; /* Para que el texto sea legible sobre la imagen oscura */
+    overflow: hidden;
+  }
+
+  .about-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Overlay oscuro para mejorar la legibilidad del texto */
+    z-index: 1;
+  }
+
+  .about-bg .container {
+    position: relative;
+    z-index: 2;
+     /* Asegura que el contenido esté por encima del overlay */
+  }
+
+  .about-bg h2,
+  .about-bg p {
+    color: white; /* Asegura que el texto dentro de la sección sea blanco */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5); /* Sombra para el texto para mayor legibilidad */
+  }
+
+  /* Ajuste para el subrayado del título en la sección "Sobre Nosotros" */
+  .about-bg h2::after {
+    background-color: white; /* Cambia el color del subrayado a blanco para contraste */
+  }
+
+  /* Cookie Consent Styles */
+  #cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-dark-gray);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    z-index: 1000;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+  }
+  #cookie-consent-banner p {
+    margin: 0;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  #cookie-consent-banner .cookie-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  #cookie-consent-banner button {
+    background-color: var(--color-yellow-gm200);
+    color: var(--color-dark-gray);
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+  #cookie-consent-banner button:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+  }
+  #cookie-consent-banner button.outline {
+    background-color: transparent;
+    color: var(--color-yellow-gm200);
+    border: 2px solid var(--color-yellow-gm200);
+  }
+  #cookie-consent-banner button.outline:hover {
+    background-color: rgba(244, 184, 0, 0.1);
+    color: white;
+  }
+
+  @media (min-width: 768px) {
+    #cookie-consent-banner {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    #cookie-consent-banner p {
+      text-align: left;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Header / Navbar -->
+<header class="sticky top-0 z-50 shadow-sm">
+  <div class="container mx-auto flex justify-between items-center py-4 px-6 md:px-12">
+    <a href="#" class="logo-container" aria-label="GM200 Construcciones logo">
+      <img src="C:\Users\Romulo Rubio\Desktop\pagina gm200 - copia\lOGO GM Su socio en soluciones de Ingenieria y Arquitectura.png" 
+      alt="Logo de Inversiones y Construcciones GM200 con ícono gris oscuro y texto GM200 en negro y amarillo" 
+      class="w-full h-auto" />
+    </a>
+    <nav>
+      <ul class="flex gap-8 font-semibold text-base">
+        <li><a href="#sobre-nosotros" class="hover:text-yellow-500 focus:text-yellow-500">Sobre Nosotros</a></li>
+        <li><a href="#a-quien-servimos" class="hover:text-yellow-500 focus:text-yellow-500">A Quién Servimos</a></li>
+        <li><a href="#que-hacemos" class="hover:text-yellow-500 focus:text-yellow-500">Qué Hacemos</a></li>
+        <li><a href="bim.html" class="hover:text-yellow-500 focus:text-yellow-500">BIM</a></li>
+        <li><a href="proyectos.html" class="hover:text-yellow-500 focus:text-yellow-500">Proyectos</a></li>
+        <li><a href="#contacto" class="hover:text-yellow-500 focus:text-yellow-500">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section py-24 px-6 md:px-12 text-white">
+  <div class="container mx-auto max-w-6xl text-center md:text-left">
+    <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight drop-shadow-lg">
+      Ingeniería que se vive. <br class="hidden md:block"/>Resultados que perduran.
+    </h1>
+    <p class="text-xl md:text-2xl max-w-xl mx-auto md:mx-0 mb-10 text-gray-100 drop-shadow">
+      En GM200, transformamos ideas en espacios que inspiran, funcionan y trascienden. Nuestras soluciones impactan, optimizan y se sostienen en el tiempo. Cada proyecto es una oportunidad para crear diseños innovadores y completamente alineados con las necesidades de nuestros clientes. 
+    </p>
+    <a href="cotizacion.html" 
+       class="inline-block bg-white text-yellow-600 font-bold px-10 py-4 rounded-lg shadow-xl hover:bg-yellow-50 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition transform hover:scale-105">
+      ¡Su cotización sin compromiso está a un clic!
+    </a>
+  </div>
+</section>
+
+<!-- About Section - Sobre Nosotros -->
+<section id="sobre-nosotros" class="py-20 px-6 md:px-12 about-bg">
+  <div class="container mx-auto max-w-5xl text-center">
+    <h2 class="text-4xl font-bold mb-8">Sobre Nosotros</h2>
+    <p class="max-w-3xl mx-auto text-lg leading-relaxed">
+      GM200 es un grupo empresarial especializado en brindar soluciones integrales de ingeniería, arquitectura y gestión de proyectos. Con más de 30 años de trayectoria, nos hemos consolidado por nuestra capacidad de innovación, calidad técnica y compromiso con la excelencia en cada obra que desarrollamos.
+    </p>
+    <p class="max-w-3xl mx-auto text-lg mt-4 leading-relaxed">
+      Utilizamos diversas tecnologías de vanguardia que nos permiten innovar y las combinamos con una visión multidisciplinaria que abarca desde estudios de viabilidad y diseño conceptual hasta la ejecución y el mantenimiento de proyectos complejos. Más que construir obras, en GM200 construimos confianza, sostenibilidad y un futuro sólido para nuestros clientes y la comunidad.
+    </p>
+  </div>
+</section>
+
+<!-- About Section - A Quién Servimos -->
+<section id="a-quien-servimos" class="py-20 px-6 md:px-12 bg-gray-50">
+  <div class="container mx-auto max-w-6xl">
+    <h2 class="text-4xl font-bold mb-12 text-center text-gray-800">A Quién Servimos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <div class="text-gray-700 text-lg leading-relaxed">
+        <p class="mb-4">
+          En GM200, nuestra misión es ser el socio estratégico de confianza para una amplia gama de clientes que buscan soluciones de ingeniería y arquitectura de la más alta calidad. Servimos a:
+        </p>
+        <ul class="list-disc list-inside space-y-2 ml-4">
+          <li><strong class="text-gray-800">Desarrolladores Inmobiliarios:</strong> Ofreciendo diseño y construcción de proyectos residenciales, comerciales e industriales.</li>
+          <li><strong class="text-gray-800">Empresas Privadas:</strong> Proporcionando infraestructura corporativa y soluciones a medida.</li>
+          <li><strong class="text-gray-800">Entidades Gubernamentales:</strong> Colaborando en proyectos de infraestructura pública, edificaciones y urbanismo.</li>
+          <li><strong class="text-gray-800">Inversionistas:</strong> Asegurando la viabilidad y rentabilidad de sus proyectos a través de estudios y gestión experta.</li>
+          <li><strong class="text-gray-800">Comunidades:</strong> Contribuyendo al desarrollo sostenible y la mejora de la calidad de vida con obras de impacto social.</li>
+        </ul>
+        <p class="mt-4">
+          Nos adaptamos a las necesidades específicas de cada sector, garantizando resultados que superan las expectativas y construyen relaciones a largo plazo.
+        </p>
+      </div>
+      <div class="flex justify-center items-center">
+        <img src="https://www.viventura.es/wp-content/uploads/2021/03/Tipos-de-Clientes.png" alt="Imagen representativa de clientes diversos" class="rounded-lg shadow-lg max-w-full h-auto transition transform hover:scale-105 duration-500">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- New Section: Qué Hacemos (What We Do) -->
+<section id="que-hacemos" class="py-20 px-6 md:px-12 bg-white">
+  <div class="container mx-auto max-w-6xl">
+    <h2 class="text-4xl font-bold mb-12 text-center text-gray-800">📌 Qué Hacemos: Soluciones Integrales para Cada Necesidad</h2>
+    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16 text-lg">
+      En GM200, nuestra experiencia abarca un amplio espectro de servicios, diseñados para ofrecer soluciones completas y personalizadas en cada etapa de su proyecto.
+    </p>
+    <div class="what-we-do-grid">
+      <div class="what-we-do-card">
+        <div class="icon">📐</div>
+        <h3>Diseño Arquitectónico</h3>
+        <p>Creación de espacios innovadores y funcionales, desde el concepto inicial hasta los planos detallados, priorizando la estética y la eficiencia.</p>
+      </div>
+      <div class="what-we-do-card">
+        <div class="icon">🏗️</div>
+        <h3>Construcción General</h3>
+        <p>Ejecución de obras civiles, residenciales, comerciales e industriales con los más altos estándares de calidad y seguridad.</p>
+      </div>
+      <div class="what-we-do-card">
+        <div class="icon">📈</div>
+        <h3>Gestión de Proyectos</h3>
+        <p>Planificación, ejecución, monitoreo y control de proyectos para asegurar el cumplimiento de plazos, presupuestos y objetivos.</p>
+      </div>
+      <div class="what-we-do-card">
+        <div class="icon">💡</div>
+        <h3>Consultoría de Ingeniería</h3>
+        <p>Asesoramiento experto en viabilidad, optimización de procesos y soluciones técnicas para desafíos complejos de ingeniería.</p>
+      </div>
+      <div class="what-we-do-card">
+        <div class="icon">♻️</div>
+        <h3>Proyectos Sostenibles</h3>
+        <p>Diseño y construcción de edificaciones con enfoque en la eficiencia energética, el uso de materiales ecológicos y la reducción del impacto ambiental.</p>
+      </div>
+      <div class="what-we-do-card">
+        <div class="icon">🛠️</div>
+        <h3>Remodelaciones y Ampliaciones</h3>
+        <p>Transformación y mejora de espacios existentes, adaptándolos a nuevas necesidades y modernizando su infraestructura.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section for Quote -->
+<section class="py-20 px-6 md:px-12 bg-yellow-500 text-white text-center">
+  <div class="container mx-auto max-w-4xl">
+    <h2 class="text-4xl font-bold mb-6">¿Listo para Empezar su Proyecto?</h2>
+    <p class="text-xl mb-10">
+      Obtenga una cotización personalizada y sin compromiso.
+    </p>
+    <a href="cotizacion.html" 
+       class="inline-block bg-white text-yellow-600 font-bold px-12 py-5 rounded-lg shadow-xl hover:bg-yellow-100 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition transform hover:scale-105 text-lg">
+      ¡Su cotización sin compromiso está a un clic!
+    </a>
+  </div>
+</section>
+
+<!-- Contact Section (Existing) -->
+<section id="contacto" class="py-20 px-6 md:px-12 bg-white">
+  <div class="container mx-auto max-w-4xl">
+    <h2 class="text-4xl font-bold mb-10 text-center text-gray-800">Conversemos Sobre Su Próximo Proyecto</h2>
+    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 text-lg">
+      ¿Tiene una idea o un proyecto en mente? Contáctenos hoy mismo y descubra cómo GM200 puede transformar su visión en una realidad exitosa.
+    </p>
+    <form action="https://formsubmit.co/info@grupogm200.com" method="POST" class="bg-gray-50 p-10 rounded-lg shadow-xl max-w-xl mx-auto contact-form" aria-label="Formulario de contacto GM200 Construcciones">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html">
+      <div class="mb-6">
+        <label for="nombre" class="block text-gray-700 font-semibold mb-2">Nombre Completo</label>
+        <input type="text" id="nombre" name="name" placeholder="Su nombre completo" required
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-yellow-300" />
+      </div>
+      <div class="mb-6">
+        <label for="email" class="block text-gray-700 font-semibold mb-2">Correo Electrónico</label>
+        <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-yellow-300" />
+      </div>
+      <div class="mb-6">
+        <label for="telefono" class="block text-gray-700 font-semibold mb-2">Número de Teléfono (Opcional)</label>
+        <input type="tel" id="telefono" name="phone" placeholder="+XX XXX XXX XXXX"
+          class="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-yellow-300" />
+      </div>
+      <div class="mb-6">
+        <label for="mensaje" class="block text-gray-700 font-semibold mb-2">Mensaje</label>
+        <textarea id="mensaje" name="message" rows="6" placeholder="Describa su proyecto o consulta aquí" required
+          class="w-full px-4 py-3 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring focus:ring-yellow-300"></textarea>
+      </div>
+      <button type="submit"
+        class="w-full py-3 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition transform hover:scale-105">
+        Enviar Mensaje
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer (Existing) -->
+<footer class="py-10 px-6 md:px-12 mt-16">
+  <div class="container mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-center text-gray-300 text-sm space-y-4 md:space-y-0">
+    <p>&copy; 2024 GM200 Inversiones y Construcciones. Todos los derechos reservados.</p>
+    <p>Desarrollado con dedicación para proporcionar soluciones confiables en construcción.</p>
+    <div class="flex gap-4">
+      <a href="politica-privacidad.html" class="hover:text-white focus:text-white">Política de Privacidad</a>
+      <a href="terminos-servicio.html" class="hover:text-white focus:text-white">Términos de Servicio</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Cookie Consent Banner -->
+<div id="cookie-consent-banner" style="display: none;">
+  <p>Utilizamos cookies para mejorar su experiencia de navegación y analizar el tráfico del sitio. Al hacer clic en "Aceptar todas", acepta nuestro uso de cookies. Puede gestionar sus preferencias en "Configurar cookies".</p>
+  <div class="cookie-buttons">
+    <button id="accept-cookies">Aceptar todas</button>
+    <button id="configure-cookies" class="outline">Configurar cookies</button>
+    <button id="reject-cookies" class="outline">Rechazar</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const cookieBanner = document.getElementById('cookie-consent-banner');
+    const acceptButton = document.getElementById('accept-cookies');
+    const configureButton = document.getElementById('configure-cookies');
+    const rejectButton = document.getElementById('reject-cookies');
+
+    // Check if cookie consent has been given
+    const consentGiven = localStorage.getItem('cookieConsent');
+
+    if (!consentGiven) {
+      cookieBanner.style.display = 'flex'; // Use flex to maintain layout
+    }
+
+    acceptButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.setItem('cookieConsent', 'accepted');
+      cookieBanner.style.display = 'none';
+      // Here you would typically load analytics scripts or other cookie-dependent features
+      console.log('Cookies accepted!');
+    });
+
+    rejectButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.setItem('cookieConsent', 'rejected');
+      cookieBanner.classList.add('hidden');
+      // Here you would typically disable analytics or other cookie-dependent features
+      console.log('Cookies rejected!');
+    });
+
+    configureButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      // For simplicity, this just logs a message. In a real scenario,
+      // you would open a more detailed cookie preference modal.
+      alert('Aquí se abriría una ventana para configurar las preferencias de cookies.');
+      console.log('Configure cookies clicked!');
+    });
+  });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Obtener Cotización - GM200 Construcciones</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --color-dark-gray: #3a3a3a;
+    --color-gray-text: #555555;
+    --color-yellow-gm200: #f4b800;
+    --color-light-gray-bg: #f9f9f9;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-light-gray-bg);
+    color: var(--color-dark-gray);
+    line-height: 1.6;
+  }
+
+  .form-input, .form-textarea, .form-select {
+    border-radius: 0.5rem;
+    border: 1px solid #ddd;
+    padding: 0.75rem 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--color-yellow-gm200);
+    box-shadow: 0 0 0 3px rgba(244, 184, 0, 0.2);
+  }
+  .form-button {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .form-button:hover {
+    transform: translateY(-2px);
+  }
+</style>
+</head>
+<body>
+
+<!-- Header / Navbar (Simplified for quote page) -->
+<header class="sticky top-0 z-50 shadow-sm bg-white">
+  <div class="container mx-auto flex justify-between items-center py-4 px-6 md:px-12">
+    <a href="index.html" class="logo-container" aria-label="GM200 Construcciones logo">
+      <img src="C:\Users\Romulo Rubio\Desktop\pagina gm200 - copia\lOGO GM Su socio en soluciones de Ingenieria y Arquitectura.png" 
+      alt="Logo de Inversiones y Construcciones GM200" 
+      class="w-full h-auto max-w-[180px]" />
+    </a>
+    <nav>
+      <a href="index.html" class="text-gray-700 hover:text-yellow-500 font-semibold">Volver a la pagina principal</a>
+    </nav>
+  </div>
+</header>
+
+<main class="py-20 px-6 md:px-12">
+  <div class="container mx-auto max-w-4xl">
+    <h1 class="text-4xl font-bold mb-10 text-center text-gray-800">Obtenga su Cotización Gratuita</h1>
+    <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12 text-lg">
+      Por favor, complete el siguiente formulario con los detalles de su proyecto. Nos pondremos en contacto con usted a la brevedad para ofrecerle una cotización personalizada.
+    </p>
+    <form action="https://formsubmit.co/info@grupogm200.com" method="POST" class="bg-white p-10 rounded-lg shadow-xl max-w-xl mx-auto" aria-label="Formulario de cotización de proyecto">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://yourdomain.com/thank-you.html"> <!-- Cambia esto a tu URL de agradecimiento -->
+      <div class="mb-6">
+        <label for="nombre_cotizacion" class="block text-gray-700 font-semibold mb-2">Nombre Completo</label>
+        <input type="text" id="nombre_cotizacion" name="name" placeholder="Su nombre completo" required
+          class="w-full form-input" />
+      </div>
+      <div class="mb-6">
+        <label for="email_cotizacion" class="block text-gray-700 font-semibold mb-2">Correo Electrónico</label>
+        <input type="email" id="email_cotizacion" name="email" placeholder="correo@ejemplo.com" required
+          class="w-full form-input" />
+      </div>
+      <div class="mb-6">
+        <label for="telefono_cotizacion" class="block text-gray-700 font-semibold mb-2">Número de Teléfono (Opcional)</label>
+        <input type="tel" id="telefono_cotizacion" name="phone" placeholder="+XX XXX XXX XXXX"
+          class="w-full form-input" />
+      </div>
+      <div class="mb-6">
+        <label for="tipo_proyecto" class="block text-gray-700 font-semibold mb-2">Tipo de Proyecto</label>
+        <select id="tipo_proyecto" name="project_type" required
+          class="w-full form-select">
+          <option value="">Seleccione una opción</option>
+          <option value="residencial">Residencial</option>
+          <option value="comercial">Comercial</option>
+          <option value="industrial">Industrial</option>
+          <option value="infraestructura">Infraestructura Pública</option>
+          <option value="remodelacion">Remodelación/Ampliación</option>
+          <option value="consultoria">Consultoría/Estudio</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="mb-6">
+        <label for="descripcion_proyecto" class="block text-gray-700 font-semibold mb-2">Describa Brevemente su Proyecto</label>
+        <textarea id="descripcion_proyecto" name="message" rows="6" placeholder="Ej: Construcción de una casa de 200m², remodelación de local comercial, estudio de viabilidad para un puente, etc." required
+          class="w-full form-textarea resize-none"></textarea>
+      </div>
+      <div class="mb-6">
+        <label for="presupuesto_estimado" class="block text-gray-700 font-semibold mb-2">Presupuesto Estimado (Opcional)</label>
+        <input type="text" id="presupuesto_estimado" name="budget" placeholder="Ej: $50,000 - $100,000"
+          class="w-full form-input" />
+      </div>
+      <button type="submit"
+        class="w-full py-3 bg-yellow-500 text-white font-bold rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition transform hover:scale-105 form-button">
+        Solicitar Cotización
+      </button>
+    </form>
+  </div>
+</main>
+
+<!-- Footer (Simplified for quote page) -->
+<footer class="py-10 px-6 md:px-12 mt-16 bg-dark-gray text-white text-center">
+  <p>&copy; 2024 GM200 Inversiones y Construcciones. Todos los derechos reservados.</p>
+</footer>
+
+<script>
+  // Form submission handler
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Simple validation
+        const requiredFields = form.querySelectorAll('[required]');
+        let isValid = true;
+        
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            field.style.borderColor = 'red';
+            isValid = false;
+          } else {
+            field.style.borderColor = '';
+          }
+        });
+
+        if (isValid) {
+          // Submit form if valid
+          form.submit();
+          
+          // Show thank you message (optional)
+          alert('Gracias por su solicitud. Nos pondremos en contacto pronto.');
+          form.reset();
+        } else {
+          alert('Por favor complete todos los campos requeridos.');
+        }
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GM200 Construcciones - BIM</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Custom palette based on the logo colors */
+  :root {
+    --color-dark-gray: #3a3a3a;
+    --color-gray-text: #555555;
+    --color-yellow-gm200: #f4b800;
+    --color-light-gray-bg: #f9f9f9;
+    --color-accent-blue: #007bff; /* Added for a modern touch, can be adjusted */
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-light-gray-bg);
+    color: var(--color-dark-gray);
+    line-height: 1.6;
+  }
+
+  /* Logo container */
+  .logo-container {
+    max-width: 220px;
+  }
+
+  /* Header styles */
+  header {
+    background-color: white;
+    border-bottom: 1px solid #eee; /* Lighter border for modern look */
+  }
+
+  nav a {
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transform for subtle animation */
+    position: relative;
+    padding-bottom: 5px;
+  }
+  nav a:hover, nav a:focus {
+    color: var(--color-yellow-gm200);
+    transform: translateY(-2px); /* Subtle lift on hover */
+    outline: none;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-yellow-gm200);
+    transition: width 0.3s ease;
+  }
+  nav a:hover::after, nav a:focus::after {
+    width: 100%;
+  }
+
+  /* Section titles */
+  h2 {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-yellow-gm200);
+    border-radius: 2px;
+  }
+  @media (min-width: 768px) {
+    h2.text-center::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    h2:not(.text-center)::after {
+      left: 0;
+      transform: translateX(0);
+    }
+  }
+
+  /* BIM Section Specific Styles */
+  .bim-section .bim-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  .bim-section .bim-item {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.07);
+    transition: transform 0.3s ease;
+  }
+  .bim-section .bim-item:hover {
+    transform: translateY(-5px);
+  }
+  .bim-section .bim-item h3 {
+    color: var(--color-yellow-gm200);
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .bim-section .bim-item p {
+    color: var(--color-gray-text);
+    font-size: 1.05rem;
+  }
+  .bim-graphic-container {
+    background: #f0f0f0;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    min-height: 300px; /* Placeholder height */
+    display: flex;
+    flex-direction: column; /* Changed to column to stack graphic and description */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--color-gray-text);
+    text-align: center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    position: relative; /* Added for positioning inner elements */
+    overflow: hidden; /* Ensure nothing spills out */
+  }
+
+  /* New styles for the BIM facets graphic */
+  .bim-facets-graphic {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px; /* Limit width for better presentation */
+    margin: 0 auto;
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  .bim-facet-node {
+    background: var(--color-dark-gray);
+    color: white;
+    padding: 1.2rem 1.8rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    min-width: 150px;
+    text-align: center;
+    cursor: pointer; /* Indicate it's clickable */
+  }
+
+  .bim-facet-node:hover {
+    background: var(--color-yellow-gm200);
+    color: var(--color-dark-gray);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .bim-facet-node.central {
+    background: var(--color-yellow-gm200);
+    color: var(--color-dark-gray);
+    font-size: 1.4rem;
+    padding: 1.5rem 2.5rem;
+    order: -1; /* Place it first in flex order */
+    margin-bottom: 2rem; /* Space below central node */
+  }
+
+  /* Lines connecting nodes (simplified for CSS) */
+  .bim-facets-graphic::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 0;
+    transform: translateY(-50%);
+  }
+  .bim-facets-graphic::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: 0;
+    transform: translateX(-50%);
+  }
+
+  /* Animation for nodes */
+  @keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .bim-facet-node {
+    animation: fadeInScale 0.5s ease-out forwards;
+    opacity: 0; /* Start hidden */
+  }
+  .bim-facet-node:nth-child(1) { animation-delay: 0.1s; }
+  .bim-facet-node:nth-child(2) { animation-delay: 0.2s; }
+  .bim-facet-node:nth-child(3) { animation-delay: 0.3s; }
+  .bim-facet-node:nth-child(4) { animation-delay: 0.4s; }
+  .bim-facet-node:nth-child(5) { animation-delay: 0.5s; }
+  .bim-facet-node:nth-child(6) { animation-delay: 0.6s; }
+  .bim-facet-node:nth-child(7) { animation-delay: 0.7s; }
+  .bim-facet-node:nth-child(8) { animation-delay: 0.8s; }
+
+  /* Styles for the description box */
+  #bim-description-box {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    min-height: 80px; /* Ensure it has some height even when empty */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--color-gray-text);
+    font-size: 1.1rem;
+    font-style: italic;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  #bim-description-box.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* New style for the large BIM image */
+  /* REMOVED: .bim-hero-image-container and .bim-hero-image styles as they are replaced by .hero-bim */
+
+  /* Hero Section for BIM Background */
+  .hero-bim {
+    position: relative;
+    height: 500px; /* Adjust height as needed */
+    background-image: url('C:/Users/Romulo Rubio/Desktop/pagina gm200 - copia/shutterstock_1169190685__2_.jpg');
+    background-size: cover; /* Cover the entire area */
+    background-position: center center; /* Center the image */
+    background-attachment: fixed; /* Parallax effect */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white; /* Text color over the background */
+    overflow: hidden; /* Ensure no overflow */
+  }
+
+  .hero-bim::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for text readability */
+    z-index: 1;
+  }
+
+  .hero-bim-content {
+    position: relative;
+    z-index: 2; /* Ensure content is above the overlay */
+    max-width: 800px;
+    padding: 0 1.5rem;
+  }
+
+  .hero-bim-content h1 {
+    font-size: 3.5rem; /* Larger title */
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Text shadow for better contrast */
+  }
+
+  .hero-bim-content p {
+    font-size: 1.5rem;
+    line-height: 1.5;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--color-dark-gray);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2.5rem 1.5rem; /* More padding */
+  }
+  footer a {
+    color: var(--color-yellow-gm200);
+    text-decoration: none; /* No underline by default */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+  footer a:hover,
+  footer a:focus {
+    text-decoration: underline; /* Underline on hover */
+    outline: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header / Navbar -->
+<header class="sticky top-0 z-50 shadow-sm">
+  <div class="container mx-auto flex justify-between items-center py-4 px-6 md:px-12">
+    <a href="index.html" class="logo-container" aria-label="GM200 Construcciones logo">
+      <img src="C:\Users\Romulo Rubio\Desktop\pagina gm200 - copia\lOGO GM Su socio en soluciones de Ingenieria y Arquitectura.png" 
+      alt="Logo de Inversiones y Construcciones GM200 con ícono gris oscuro y texto GM200 en negro y amarillo" 
+      class="w-full h-auto" />
+    </a>
+    <nav>
+      <ul class="flex gap-8 font-semibold text-base">
+        <li><a href="index.html#sobre-nosotros" class="hover:text-yellow-500 focus:text-yellow-500">Sobre Nosotros</a></li>
+        <li><a href="index.html#a-quien-servimos" class="hover:text-yellow-500 focus:text-yellow-500">A Quién Servimos</a></li>
+        <li><a href="index.html#que-hacemos" class="hover:text-yellow-500 focus:text-yellow-500">Qué Hacemos</a></li>
+        <li><a href="bim.html" class="hover:text-yellow-500 focus:text-yellow-500">BIM</a></li>
+        <li><a href="index.html#proyectos" class="hover:text-yellow-500 focus:text-yellow-500">Proyectos</a></li>
+        <li><a href="index.html#contacto" class="hover:text-yellow-500 focus:text-yellow-500">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Section with BIM Background -->
+<section class="hero-bim">
+  <div class="hero-bim-content">
+    <h1>BIM: Construyendo el Futuro Digital</h1>
+    <p>
+      En GM200, la metodología Building Information Modeling (BIM) es el pilar de nuestra innovación, permitiéndonos diseñar, construir y gestionar proyectos con una eficiencia y precisión sin precedentes.
+    </p>
+  </div>
+</section>
+
+<!-- BIM Section (rest of the content) -->
+<section id="bim" class="py-20 px-6 md:px-12 bg-white bim-section">
+  <div class="container mx-auto max-w-6xl">
+    <!-- The main title and introductory paragraph are now in the hero section -->
+    
+    <div class="bim-content">
+      <div class="bim-item">
+        <h3>¿Qué es BIM?</h3>
+        <p>
+          BIM es mucho más que un software; es una metodología de trabajo colaborativa para la creación y gestión de proyectos de construcción. Implica la generación y el uso de un modelo digital que contiene información inteligente y estructurada de todas las disciplinas involucradas en el ciclo de vida de una edificación. Este modelo centralizado permite una visualización 3D, análisis de datos, detección de interferencias y una comunicación fluida entre todos los actores del proyecto.
+        </p>
+      </div>
+
+      <div class="bim-item">
+        <h3>Metodología BIM en GM200</h3>
+        <p>
+          Nuestra implementación de BIM se centra en la integración total. Desde la fase de diseño conceptual, donde creamos modelos paramétricos detallados, hasta la planificación de la construcción (4D), la gestión de costos (5D) y la operación y mantenimiento del edificio (6D y 7D). Esto nos permite optimizar recursos, minimizar errores, reducir tiempos de entrega y ofrecer una visión completa y transparente del proyecto a nuestros clientes.
+        </p>
+      </div>
+
+      <div class="bim-item">
+        <h3>Beneficios Clave del BIM</h3>
+        <ul class="list-disc list-inside space-y-2 text-gray-600 ml-4">
+          <li><strong>Reducción de Errores y Conflictos:</strong> La detección temprana de interferencias en el modelo evita costosos retrabajos en obra.</li>
+          <li><strong>Optimización de Costos y Tiempos:</strong> Una planificación más precisa y la simulación de escenarios permiten un control presupuestario y de cronograma superior.</li>
+          <li><strong>Mejora de la Colaboración:</strong> Todos los equipos trabajan sobre un mismo modelo, facilitando la comunicación y la toma de decisiones.</li>
+          <li><strong>Visualización Avanzada:</strong> Renderizados fotorrealistas y realidad virtual permiten a los clientes experimentar el proyecto antes de su construcción.</li>
+          <li><strong>Gestión del Ciclo de Vida:</strong> El modelo BIM sirve como una base de datos para la operación y el mantenimiento del edificio a largo plazo.</li>
+          <li><strong>Sostenibilidad:</strong> Permite análisis energéticos y de impacto ambiental para diseñar edificaciones más eficientes.</li>
+        </ul>
+      </div>
+
+      <div class="bim-graphic-container">
+        <!-- Nuevo contenido para el gráfico de facetas BIM -->
+        <div class="bim-facets-graphic">
+          <div class="bim-facet-node central" data-description="El corazón de la metodología BIM, integrando toda la información del proyecto en un modelo digital centralizado para una gestión eficiente.">BIM Central</div>
+          <div class="bim-facet-node" data-description="Creación de modelos tridimensionales detallados de la edificación, incluyendo geometría y datos de los componentes.">Modelado 3D</div>
+          <div class="bim-facet-node" data-description="Integración del tiempo al modelo 3D para la planificación y simulación de la secuencia de construcción.">Planificación 4D (Tiempo)</div>
+          <div class="bim-facet-node" data-description="Vinculación del modelo 3D con la información de costos para estimaciones precisas y control presupuestario.">Estimación 5D (Costos)</div>
+          <div class="bim-facet-node" data-description="Análisis del rendimiento energético y ambiental del edificio para diseñar soluciones más sostenibles.">Sostenibilidad 6D</div>
+          <div class="bim-facet-node" data-description="Uso del modelo BIM para la gestión de activos y mantenimiento a lo largo de la vida útil del edificio.">Gestión de Instalaciones 7D</div>
+          <div class="bim-facet-node" data-description="Facilita la comunicación y el trabajo conjunto entre todas las disciplinas y partes interesadas del proyecto.">Colaboración</div>
+          <div class="bim-facet-node" data-description="Extracción y análisis de datos del modelo BIM para optimizar el diseño, la construcción y la operación.">Análisis de Datos</div>
+        </div>
+        
+        <!-- Contenedor para la descripción -->
+        <div id="bim-description-box" class="w-full max-w-3xl mx-auto">
+          Haz clic en una de las facetas BIM para ver su descripción.
+        </div>
+
+        <!-- Nota para futura implementación con JS -->
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 px-6 md:px-12 mt-16">
+  <div class="container mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-center text-gray-300 text-sm space-y-4 md:space-y-0">
+    <p>&copy; 2024 GM200 Inversiones y Construcciones. Todos los derechos reservados.</p>
+    <p>Desarrollado con dedicación para proporcionar soluciones confiables en construcción.</p>
+    <div class="flex gap-4">
+      <a href="politica-privacidad.html" class="hover:text-white focus:text-white">Política de Privacidad</a>
+      <a href="terminos-servicio.html" class="hover:text-white focus:text-white">Términos de Servicio</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bimNodes = document.querySelectorAll('.bim-facet-node');
+    const descriptionBox = document.getElementById('bim-description-box');
+    const initialDescription = "Haz clic en una de las facetas BIM para ver su descripción.";
+
+    // Set initial text and make it visible
+    descriptionBox.textContent = initialDescription;
+    descriptionBox.classList.add('show');
+
+    bimNodes.forEach(node => {
+      node.addEventListener('click', () => {
+        const description = node.dataset.description; // Get the description from data-description attribute
+        if (description) {
+          descriptionBox.textContent = description;
+          descriptionBox.classList.add('show'); // Ensure it's visible and animated
+        } else {
+          descriptionBox.textContent = "No hay descripción disponible para esta faceta.";
+          descriptionBox.classList.add('show');
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>

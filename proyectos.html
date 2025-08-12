@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GM200 Construcciones - Nuestros Proyectos</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  /* Custom palette based on the logo colors */
+  :root {
+    --color-dark-gray: #3a3a3a;
+    --color-gray-text: #555555;
+    --color-yellow-gm200: #f4b800;
+    --color-light-gray-bg: #f9f9f9;
+    --color-accent-blue: #007bff; /* Added for a modern touch, can be adjusted */
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-light-gray-bg);
+    color: var(--color-dark-gray);
+    line-height: 1.6;
+  }
+
+  /* Logo container */
+  .logo-container {
+    max-width: 220px;
+  }
+
+  /* Header styles */
+  header {
+    background-color: white;
+    border-bottom: 1px solid #eee; /* Lighter border for modern look */
+  }
+
+  nav a {
+    transition: color 0.3s ease, transform 0.3s ease; /* Added transform for subtle animation */
+    position: relative;
+    padding-bottom: 5px;
+  }
+  nav a:hover, nav a:focus {
+    color: var(--color-yellow-gm200);
+    transform: translateY(-2px); /* Subtle lift on hover */
+    outline: none;
+  }
+  nav a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-yellow-gm200);
+    transition: width 0.3s ease;
+  }
+  nav a:hover::after, nav a:focus::after {
+    width: 100%;
+  }
+
+  /* Section titles */
+  h2 {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 2rem;
+  }
+  h2::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background-color: var(--color-yellow-gm200);
+    border-radius: 2px;
+  }
+  @media (min-width: 768px) {
+    h2.text-center::after {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    h2:not(.text-center)::after {
+      left: 0;
+      transform: translateX(0);
+    }
+  }
+
+  /* Projects grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem; /* Increased gap */
+  }
+
+  /* Project card */
+  .project-card {
+    background: white;
+    border-radius: 0.75rem; /* Slightly more rounded */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Stronger, more defined shadow */
+    overflow: hidden;
+    transition: transform 0.4s ease, box-shadow 0.4s ease; /* Slower transition */
+    cursor: pointer;
+  }
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-12px) scale(1.02); /* More pronounced lift and slight scale */
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.18); /* More intense shadow on hover */
+    outline: none;
+  }
+  .project-card img {
+    width: 100%;
+    height: 200px; /* Slightly taller images */
+    object-fit: cover;
+    transition: transform 0.4s ease; /* Image zoom on hover */
+  }
+  .project-card:hover img {
+    transform: scale(1.05);
+  }
+  .project-content {
+    padding: 1.5rem; /* More padding */
+  }
+  .project-title {
+    font-weight: 700;
+    font-size: 1.25rem; /* Slightly larger title */
+    color: var(--color-dark-gray);
+    margin-bottom: 0.5rem;
+  }
+  .project-description {
+    color: var(--color-gray-text);
+    font-size: 1rem; /* Slightly larger description text */
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    background-color: var(--color-dark-gray);
+    color: white;
+    font-size: 0.9rem;
+    padding: 2.5rem 1.5rem; /* More padding */
+  }
+  footer a {
+    color: var(--color-yellow-gm200);
+    text-decoration: none; /* No underline by default */
+    transition: color 0.3s ease, text-decoration 0.3s ease;
+  }
+  footer a:hover,
+  footer a:focus {
+    text-decoration: underline; /* Underline on hover */
+    outline: none;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header / Navbar -->
+<header class="sticky top-0 z-50 shadow-sm">
+  <div class="container mx-auto flex justify-between items-center py-4 px-6 md:px-12">
+    <a href="index.html" class="logo-container" aria-label="GM200 Construcciones logo"> <!-- Enlace a index.html -->
+      <img src="C:\Users\Romulo Rubio\Desktop\pagina gm200 - copia\lOGO GM Su socio en soluciones de Ingenieria y Arquitectura.png" 
+      alt="Logo de Inversiones y Construcciones GM200 con ícono gris oscuro y texto GM200 en negro y amarillo" 
+      class="w-full h-auto" />
+    </a>
+    <nav>
+      <ul class="flex gap-8 font-semibold text-base">
+        <li><a href="index.html#sobre-nosotros" class="hover:text-yellow-500 focus:text-yellow-500">Sobre Nosotros</a></li>
+        <li><a href="index.html#a-quien-servimos" class="hover:text-yellow-500 focus:text-yellow-500">A Quién Servimos</a></li>
+        <li><a href="index.html#que-hacemos" class="hover:text-yellow-500 focus:text-yellow-500">Qué Hacemos</a></li>
+        <li><a href="bim.html" class="hover:text-yellow-500 focus:text-yellow-500">BIM</a></li>
+        <li><a href="proyectos.html" class="hover:text-yellow-500 focus:text-yellow-500">Proyectos</a></li> <!-- Enlace actualizado -->
+        <li><a href="index.html#contacto" class="hover:text-yellow-500 focus:text-yellow-500">Contacto</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- Projects Section (Ahora en su propia página) -->
+<section id="proyectos" class="py-20 px-6 md:px-12 bg-gray-50">
+  <div class="container mx-auto max-w-6xl">
+    <h2 class="text-4xl font-bold mb-12 text-center text-gray-800">Nuestros Proyectos Destacados: Donde la Visión se Convierte en Realidad</h2>
+    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-16 text-lg">
+      Cada proyecto en GM200 es una historia de éxito, un testimonio de nuestra dedicación a la excelencia, la innovación y la satisfacción del cliente. Explore algunas de nuestras obras más emblemáticas.
+    </p>
+    <div class="projects-grid">
+      <article class="project-card" tabindex="0" aria-label="Proyecto Ciudad Banesco">
+        <img src="https://fotografias.larazon.es/clipping/cmsimages01/2019/08/13/A68C5D7B-2EF3-4751-BF3E-3252D4C93199/98.jpg?crop=1000,563,x0,y52&width=1900&height=1069&optimize=low&format=webply" 
+          alt="Ciudad Banesco, un complejo corporativo moderno" onerror="this.style.display='none'" />
+        <div class="project-content">
+          <h3 class="project-title">Ciudad Banesco</h3>
+          <p class="project-description">
+            Un complejo corporativo moderno que integra sostenibilidad, tecnología y arquitectura de vanguardia para impulsar el desarrollo financiero venezolano. Un hito de eficiencia y diseño.
+          </p>
+          <p class="text-sm text-gray-500 mt-3">
+            <strong class="text-yellow-600">Slogan:</strong> "Innovación que redefine el horizonte corporativo."
+          </p>
+        </div>
+      </article>
+      <article class="project-card" tabindex="0" aria-label="Proyecto Teatro Municipal de Caracas">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Teatro_Municipal_de_Caracas.jpg/960px-Teatro_Municipal_de_Caracas.jpg" 
+          alt="Teatro Municipal de Caracas, un ícono cultural histórico" onerror="this.style.display='none'" />
+        <div class="project-content">
+          <h3 class="project-title">Teatro Municipal de Caracas</h3>
+          <p class="project-description">
+            La restauración de un ícono cultural histórico que celebra las artes escénicas y enriquece la vida teatral caraqueña, preservando su legado y adaptándolo al futuro.
+          </p>
+          <p class="text-sm text-gray-500 mt-3">
+            <strong class="text-yellow-600">Slogan:</strong> "Donde la historia y el arte se encuentran con la ingeniería."
+          </p>
+        </div>
+      </article>
+      <article class="project-card" tabindex="0" aria-label="Proyecto Poliedro de Caracas">
+        <img src="https://guiaccs.com/wp-content/uploads/2017/09/Poliedro-de-Caracas_FFU-DESTACDA.jpg" 
+          alt="Poliedro de Caracas, un espacio multifuncional emblemático" onerror="this.style.display='none'" />
+        <div class="project-content">
+          <h3 class="project-title">Poliedro de Caracas</h3>
+          <p class="project-description">
+            La modernización de un espacio multifuncional emblemático que alberga eventos deportivos, culturales y conciertos de gran magnitud para toda la ciudad, con infraestructura de primer nivel.
+          </p>
+          <p class="text-sm text-gray-500 mt-3">
+            <strong class="text-yellow-600">Slogan:</strong> "Ingeniería para eventos que marcan la historia."
+          </p>
+        </div>
+      </article>
+      <!-- Puedes añadir más proyectos aquí -->
+      <article class="project-card" tabindex="0" aria-label="Fruta´s condominio">
+        <img src="https://cdn.photos.sparkplatform.com/ven/20210916180309151604000000-o.jpg" 
+          alt="Fruta´s condominio" onerror="this.style.display='none'" />
+        <div class="project-content">
+          <h3 class="project-title">Fruta´s Condominio</h3>
+          <p class="project-description">
+            Proyecto residencial en Guatire que ofrece confort, seguridad y diseño moderno en una ubicación privilegiada.
+
+
+
+
+
+
+
+
+
+
+
+          </p>
+          <p class="text-sm text-gray-500 mt-3">
+            <strong class="text-yellow-600">Slogan:</strong> "Vive el sabor de tu nuevo hogar."
+          </p>
+        </div>
+      </article>
+      <article class="project-card" tabindex="0" aria-label="Proyecto Embajada Canada">
+        <img src="https://globalnews.ca/wp-content/uploads/2019/06/18264561.jpg?quality=65&strip=all" 
+          alt="Embajada Canada" onerror="this.style.display='none'" />
+        <div class="project-content">
+          <h3 class="project-title">Embajada de Canada</h3>
+          <p class="project-description">
+            Representación oficial de Canadá en Venezuela, ofreciendo servicios consulares y fortaleciendo vínculos diplomáticos, culturales y comerciales.
+          </p>
+          <p class="text-sm text-gray-500 mt-3">
+            <strong class="text-yellow-600">Slogan:</strong> "Conectando Canadá con el mundo."
+          </p>
+         
+        </div>
+      </article>
+      <article class="project-card" tabindex="0" aria-label="Puente Peatonal sobre el Río Guaire en Plaza Venezuela">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/90/RioGuaire2004-8.jpg" 
+          alt="Plaza Venezuela" onerror="this.style.display='none'" />
+        <div class="project-content">
+          <h3 class="project-title">Puente Peatonal sobre el Río Guaire en Plaza Venezuela</h3>
+          <p class="project-description">
+            Un regalo para la ciudad de Caracas.
+          </p>
+          <p class="text-sm text-gray-500 mt-3">
+            <strong class="text-yellow-600">Slogan:</strong> "Donde miles cruzan caminos cada día."
+          </p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section for Quote (Opcional, puedes mantenerlo o adaptarlo) -->
+<section class="py-20 px-6 md:px-12 bg-yellow-500 text-white text-center">
+  <div class="container mx-auto max-w-4xl">
+    <h2 class="text-4xl font-bold mb-6">¿Listo para Empezar su Proyecto?</h2>
+    <p class="text-xl mb-10">
+      Obtenga una cotización personalizada y sin compromiso. Nuestro equipo está listo para escuchar sus ideas y convertirlas en realidad.
+    </p>
+    <a href="cotizacion.html" 
+       class="inline-block bg-white text-yellow-600 font-bold px-12 py-5 rounded-lg shadow-xl hover:bg-yellow-100 focus:outline-none focus:ring-4 focus:ring-yellow-300 transition transform hover:scale-105 text-lg">
+      ¡Su cotización sin compromiso está a un clic!
+    </a>
+  </div>
+</section>
+
+<!-- Footer (Existing) -->
+<footer class="py-10 px-6 md:px-12 mt-16">
+  <div class="container mx-auto max-w-6xl flex flex-col md:flex-row justify-between items-center text-gray-300 text-sm space-y-4 md:space-y-0">
+    <p>&copy; 2024 GM200 Inversiones y Construcciones. Todos los derechos reservados.</p>
+    <p>Desarrollado con dedicación para proporcionar soluciones confiables en construcción.</p>
+    <div class="flex gap-4">
+      <a href="politica-privacidad.html" class="hover:text-white focus:text-white">Política de Privacidad</a>
+      <a href="terminos-servicio.html" class="hover:text-white focus:text-white">Términos de Servicio</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
